@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protección con Impacto — Val Arroyo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B3A6B;
+    --green: #4A9B6F;
+    --cream: #F5F3EE;
+    --warm-white: #FDFCF9;
+    --gold: #C9A84C;
+    --text-dark: #1a1a1a;
+    --text-mid: #4a4a4a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--warm-white);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 28px 80px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -30%;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,155,111,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -20%;
+    left: -20%;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 8vw, 52px);
+    line-height: 1.2;
+    color: var(--cream);
+    margin-bottom: 24px;
+    max-width: 520px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.4s forwards;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    line-height: 1.7;
+    color: rgba(245,243,238,0.7);
+    max-width: 380px;
+    margin-bottom: 48px;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.6s forwards;
+  }
+
+  .cta-primary {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    padding: 18px 40px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.8s forwards;
+    box-shadow: 0 4px 24px rgba(74,155,111,0.35);
+  }
+
+  .cta-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(74,155,111,0.45);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s ease 1.4s forwards;
+  }
+
+  .scroll-hint span {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(245,243,238,0.35);
+  }
+
+  .scroll-arrow {
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(to bottom, rgba(245,243,238,0.3), transparent);
+    animation: pulse-line 2s ease infinite;
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    background: var(--cream);
+    padding: 80px 28px;
+  }
+
+  .about-inner {
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--green);
+    font-weight: 500;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .about-strip h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 6vw, 38px);
+    line-height: 1.25;
+    color: var(--navy);
+    margin-bottom: 24px;
+  }
+
+  .about-strip p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-mid);
+    margin-bottom: 16px;
+    font-weight: 300;
+  }
+
+  .about-strip p strong {
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  .divider-line {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin: 32px 0;
+  }
+
+  /* PHOTO + QUOTE BLOCK */
+  .photo-block {
+    background: var(--navy);
+    padding: 72px 28px;
+    text-align: center;
+  }
+
+  .photo-circle {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--green), var(--navy));
+    margin: 0 auto 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    color: var(--cream);
+    border: 3px solid rgba(201,168,76,0.4);
+    letter-spacing: -2px;
+  }
+
+  .photo-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+
+  .photo-title {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--green);
+    margin-bottom: 32px;
+  }
+
+  .quote-block {
+    max-width: 420px;
+    margin: 0 auto;
+    border-left: 2px solid var(--gold);
+    padding-left: 24px;
+    text-align: left;
+  }
+
+  .quote-block p {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-style: italic;
+    line-height: 1.6;
+    color: rgba(245,243,238,0.9);
+    margin-bottom: 12px;
+  }
+
+  .quote-block cite {
+    font-size: 12px;
+    color: var(--gold);
+    font-style: normal;
+    letter-spacing: 1px;
+  }
+
+  /* HOW IT WORKS */
+  .how-section {
+    padding: 80px 28px;
+    background: var(--warm-white);
+  }
+
+  .how-inner {
+    max-width: 540px;
+    margin: 0 auto;
+  }
+
+  .how-inner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 5vw, 34px);
+    color: var(--navy);
+    margin-bottom: 48px;
+    line-height: 1.3;
+  }
+
+  .step {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    margin-top: 2px;
+  }
+
+  .step-content h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+
+  .step-content p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-mid);
+    font-weight: 300;
+  }
+
+  /* TRUST SIGNALS */
+  .trust-section {
+    background: #EFF2F7;
+    padding: 60px 28px;
+    text-align: center;
+  }
+
+  .trust-inner {
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .trust-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    border: 1px solid rgba(27,58,107,0.12);
+    border-radius: 50px;
+    padding: 12px 24px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    color: var(--navy);
+    font-weight: 400;
+  }
+
+  .trust-badge .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+  }
+
+  .trust-tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--navy);
+    margin-top: 32px;
+    line-height: 1.5;
+  }
+
+  /* CTA FINAL */
+  .cta-section {
+    background: var(--navy);
+    padding: 88px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(74,155,111,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .cta-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 7vw, 44px);
+    color: var(--cream);
+    margin-bottom: 16px;
+    line-height: 1.25;
+    position: relative;
+  }
+
+  .cta-section h2 em {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  .cta-section p {
+    font-size: 15px;
+    color: rgba(245,243,238,0.65);
+    margin-bottom: 44px;
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+    position: relative;
+  }
+
+  .btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #25D366;
+    color: white;
+    padding: 18px 36px;
+    border-radius: 50px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.3);
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+  }
+
+  .btn-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(37,211,102,0.4);
+  }
+
+  .btn-whatsapp svg {
+    width: 20px;
+    height: 20px;
+    fill: white;
+    flex-shrink: 0;
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(245,243,238,0.55);
+    font-size: 13px;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 1px solid rgba(245,243,238,0.15);
+    border-radius: 50px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .btn-secondary:hover {
+    color: var(--cream);
+    border-color: rgba(245,243,238,0.35);
+  }
+
+  /* FOOTER */
+  footer {
+    background: #0f2347;
+    padding: 32px 28px;
+    text-align: center;
+  }
+
+  footer p {
+    font-size: 11px;
+    color: rgba(245,243,238,0.3);
+    line-height: 1.8;
+    letter-spacing: 0.3px;
+  }
+
+  footer a {
+    color: var(--green);
+    text-decoration: none;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes pulse-line {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 0.7; transform: scaleY(1.1); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">Protección con Impacto</p>
+  <h1>¿Y si algo te pasara mañana, <em>tu familia estaría bien?</em></h1>
+  <p class="hero-sub">Nadie quiere pensarlo. Pero es justo la pregunta que puede cambiarlo todo.</p>
+  <a href="#cta" class="cta-primary">Quiero saber más →</a>
+  <div class="scroll-hint">
+    <span>Sigue</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-strip">
+  <div class="about-inner reveal">
+    <span class="section-label">Mi historia</span>
+    <h2>Yo tampoco lo pensé — hasta que me cayó el veinte.</h2>
+    <p>
+      Trabajé años en planeación estratégica y gestión de riesgos. Sabía cómo proteger empresas.
+      Pero un día me pregunté: <strong>¿y quién protege a mi propia familia?</strong>
+    </p>
+    <p>
+      Ahí fue cuando todo cambió. Hoy ayudo a personas como tú a construir una red de protección real —
+      <strong>sin presión, sin letra chica oculta, sin promesas vacías.</strong>
+    </p>
+    <div class="divider-line"></div>
+    <p style="font-size:15px; color: var(--navy); font-weight:400;">
+      Una conversación de 20 minutos puede darte más claridad de la que crees.
+    </p>
+  </div>
+</section>
+
+<!-- PHOTO + QUOTE -->
+<section class="photo-block">
+  <div class="photo-circle reveal">VA</div>
+  <p class="photo-name reveal">Val Arroyo</p>
+  <p class="photo-title reveal">Asesora de Protección Financiera · SMNYL</p>
+  <div class="quote-block reveal">
+    <p>"No vendo seguros. Ayudo a las personas a tomar decisiones que protegen lo que más quieren."</p>
+    <cite>— Val Arroyo</cite>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="how-inner">
+    <h2 class="reveal">¿Cómo funciona trabajar conmigo?</h2>
+
+    <div class="step reveal">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Conversación inicial sin compromiso</h3>
+        <p>20 minutos para entender tu situación. Sin guión, sin presión. Solo escucho y te hago las preguntas correctas.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Te presento opciones reales, con números reales</h3>
+        <p>Nada de estimados o promesas vagas. Te muestro exactamente qué cubre cada plan y cuánto cuesta.</p>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Tú decides, a tu ritmo</h3>
+        <p>Mi trabajo termina cuando tú te sientes seguro/a de tu decisión. Nunca antes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST SIGNALS -->
+<section class="trust-section">
+  <div class="trust-inner reveal">
+    <div>
+      <div class="trust-badge"><span class="dot"></span> Afiliada a Seguros Monterrey New York Life</div>
+    </div>
+    <div>
+      <div class="trust-badge"><span class="dot"></span> Planeación estratégica y gestión de riesgos</div>
+    </div>
+    <div>
+      <div class="trust-badge"><span class="dot"></span> Planes de ahorro, educación y protección de vida</div>
+    </div>
+    <p class="trust-tagline">"De manera honesta y transparente.<br>Así trabajo yo."</p>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-section" id="cta">
+  <h2>Una conversación puede <em>cambiarlo todo.</em></h2>
+  <p>Escríbeme hoy. Sin compromiso, sin presión. Solo platicamos.</p>
+  <div class="cta-buttons">
+    <a href="https://wa.me/521XXXXXXXXXX?text=Hola%20Val%2C%20vi%20tu%20tarjeta%20y%20me%20gustar%C3%ADa%20saber%20m%C3%A1s%20sobre%20protecci%C3%B3n%20financiera." class="btn-whatsapp">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Escríbeme por WhatsApp
+    </a>
+    <a href="https://instagram.com/proteccionconimpacto" class="btn-secondary">
+      Ver más en Instagram →
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>
+    <strong style="color:rgba(245,243,238,0.5)">Protección con Impacto</strong> · Val Arroyo<br>
+    Asesora afiliada a <a href="https://www.smnym.com.mx">Seguros Monterrey New York Life</a><br>
+    <a href="https://proteccionconimpacto.com">proteccionconimpacto.com</a>
+  </p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
